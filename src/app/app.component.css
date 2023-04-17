@@ -1,0 +1,37 @@
+h3 span{
+    font-size: 38px;
+}
+input {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#prefix {
+    border-right: 1px dotted black;
+    border-left: 1px solid black;
+}
+
+#serial {
+    border-right: 1px dotted black;
+    border-left: 1px dotted black;
+}
+
+.container{
+    font-size: 12px;
+}
+
+.input-group{
+    flex-wrap: nowrap;
+}
+
+.container input, .input-group-text{
+    padding: 0 2px;
+}
+
+.input-group-text span{
+    size: 1rem;
+}
+
+
