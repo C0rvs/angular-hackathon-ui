@@ -8,10 +8,9 @@ input {
     border-left: 1px solid black;
 }
 .dropdown {
-    width: 22rem; /* Replace with the same width as the input */
+    width: 100%; /* Replace with the same width as the input */
     border: 1px solid #ccc;
     background-color: #fff;
-    position: absolute;
     z-index: 1;
     padding: 0;
     margin: 0;
