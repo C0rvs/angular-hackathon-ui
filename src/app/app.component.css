@@ -8,8 +8,12 @@ input {
     border-left: 1px solid black;
     font-size: 12px;
 }
+
+ul, li{
+    padding-left: 1rem;
+}
 .dropdown {
-    width: 100%; /* Replace with the same width as the input */
+    width: 100%;
     border: 1px solid #ccc;
     background-color: #fff;
     z-index: 1;
@@ -19,7 +23,7 @@ input {
   }
   
   .dropdown p {
-    padding: 5px;
+    padding: 0;
     cursor: pointer;
   }
   
