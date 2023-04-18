@@ -7,6 +7,25 @@ input {
     border-bottom: 1px solid black;
     border-left: 1px solid black;
 }
+.dropdown {
+    width: 22rem; /* Replace with the same width as the input */
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .dropdown p {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .dropdown p:hover {
+    background-color: #f2f2f2;
+  }
 
 #prefix {
     border-right: 1px dotted black;

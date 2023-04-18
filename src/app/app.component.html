@@ -124,7 +124,7 @@
         <label for="natureOfGoods">Nature of Goods</label>
         <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm" (input)="onSearch()">
       
-        <div *ngIf="filteredOptions.length > 0">
+        <div *ngIf="filteredOptions.length > 0" class="dropdown">
           <ul>
             <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
           </ul>
