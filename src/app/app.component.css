@@ -1,6 +1,7 @@
-h3 span{
+h3 span {
     font-size: 38px;
 }
+
 input {
     border-top: 1px solid black;
     border-right: 1px solid black;
@@ -9,9 +10,11 @@ input {
     font-size: 12px;
 }
 
-ul, li{
+ul,
+li {
     padding-left: 1rem;
 }
+
 .dropdown {
     width: 100%;
     border: 1px solid #ccc;
@@ -20,16 +23,16 @@ ul, li{
     padding: 0;
     margin: 0;
     list-style: none;
-  }
-  
-  .dropdown p {
+}
+
+.dropdown p {
     padding: 0;
     cursor: pointer;
-  }
-  
-  .dropdown p:hover {
+}
+
+.dropdown p:hover {
     background-color: #f2f2f2;
-  }
+}
 
 #prefix {
     border-right: 1px dotted black;
@@ -41,23 +44,77 @@ ul, li{
     border-left: 1px dotted black;
 }
 
-.container{
+.container {
     font-size: 12px;
 }
 
-.input-group{
+.input-group {
     flex-wrap: nowrap;
 }
 
-.container input, .input-group-text{
+.container input,
+.input-group-text {
     padding: 0 2px;
 }
-.input-group-text{
+
+.input-group-text {
     font-size: 12px;
 }
 
-.input-group-text span{
+.input-group-text span {
     size: 1rem;
 }
 
 
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+/* input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+} */
+
+/* input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+} */
+
+/* input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+    cursor: pointer;
+} */
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+    background-color: #e9e9e9;
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
