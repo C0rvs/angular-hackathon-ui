@@ -4,7 +4,7 @@
 </h3>
 
 <div class="container ">
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-md-4">
       <div class="input-group">
         <div class="form-label-group">
@@ -17,7 +17,7 @@
             <input type="text" id="serial" class="form-control" placeholder="">
             <div class="input-group-text">
               <input type="checkbox" aria-label="Checkbox for serial">
-              <label for="serialCheckbox" class="ml-2">Master</label>
+              <label for="serialCheckbox">Master</label>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-md-4">
-      <div class="input-group mb-3">
+      <div class="input-group">
         <div class="form-label-group">
           <label for="agent">Agent</label>
           <input type="text" id="agent" class="form-control" placeholder="">
@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-md-4">
-      <div class="input-group mb-3">
+      <div class="input-group">
         <div class="form-label-group">
           <label for="origin">Origin</label>
           <div class="input-group">
@@ -60,17 +60,26 @@
       </div>
     </div>
   </div>
-
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-md-4">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="pieces">Pieces</label>
           <input type="text" id="pieces" class="form-control" placeholder="">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <label for="weight">Weight</label>
-          <input type="text" id="weight" class="form-control" placeholder="">
+          <div class="input-group">
+            <input type="text" id="weight" class="form-control" placeholder="">
+            <span class="input-group-text">kg</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="volume">Volume</label>
+          <div class="input-group">
+            <input type="text" id="volume" class="form-control" placeholder="">
+            <span class="input-group-text">m3</span>
+          </div>
         </div>
       </div>
 
@@ -78,27 +87,22 @@
 
     <div class="col-md-4">
       <div class="row">
-        <div class="col-md-6">
-          <label for="volume">Volume</label>
-          <input type="text" id="volume" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <label for="chargeableWeight">Chargeable Weight</label>
-          <input type="text" id="chargeableWeight" class="form-control" placeholder="">
+          <div class="input-group">
+            <input type="text" id="chargeableWeight" class="form-control" placeholder="">
+            <span class="input-group-text">kg</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="priceClass">Price Class</label>
+          <input type="text" id="priceClass" class="form-control" placeholder="">
+        </div>
+        <div class="col-md-3">
+          <label for="currency">Currency</label>
+          <input type="text" id="currency" class="form-control" placeholder="">
         </div>
       </div>
-    </div>
-
-    <div class="col-md-4">
-      <label for="natureOfGoods">Nature of Goods</label>
-      <input type="text" id="natureOfGoods" class="form-control" placeholder="">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-4">
-      <label for="specialHS">Special Handling Codes</label>
-      <input type="text" id="specialHS" class="form-control" placeholder="">
     </div>
 
     <div class="col-md-4">
@@ -108,27 +112,27 @@
           <input type="text" id="product" class="form-control" placeholder="">
         </div>
         <div class="col-md-6">
-          <label for="priceClass">Price Class</label>
-          <input type="text" id="priceClass" class="form-control" placeholder="">
+          <label for="priority">Priority</label>
+          <input type="text" id="priority" class="form-control" placeholder="" disabled>
         </div>
       </div>
-
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="natureOfGoods">Nature of Goods</label>
+      <input type="text" id="natureOfGoods" class="form-control" placeholder="">
     </div>
 
     <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-6">
-          <label for="currency">Volume</label>
-          <input type="text" id="currency" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-6">
-          <label for="priority">Priority</label>
-          <input type="text" id="priority" class="form-control" placeholder="">
-        </div>
-      </div>
+      <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
+      <input type="text" id="specialHandlingcodes" class="form-control" placeholder="">
     </div>
 
-    
-  </div>
+    <div class="col-md-4">
+      <label for="hsCode">Harmonized System (HS) Codes</label>
+      <input type="text" id="hsCode" class="form-control" placeholder="">
+    </div>
 
-  
+
+  </div>

@@ -29,6 +29,9 @@ input {
 .container input, .input-group-text{
     padding: 0 2px;
 }
+.input-group-text{
+    font-size: 12px;
+}
 
 .input-group-text span{
     size: 1rem;
