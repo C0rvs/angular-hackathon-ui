@@ -122,8 +122,13 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="natureOfGoods">Nature of Goods</label>
-        <input type="text" id="natureOfGoods" class="form-control" placeholder="" list="listForNatureOfGoods">
-
+        <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm" (input)="onSearch()">
+      
+        <div *ngIf="filteredOptions.length > 0">
+          <ul>
+            <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
+          </ul>
+        </div>
       </div>
     </div>
 
