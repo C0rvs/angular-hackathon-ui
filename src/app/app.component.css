@@ -6,6 +6,7 @@ input {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     border-left: 1px solid black;
+    font-size: 12px;
 }
 .dropdown {
     width: 100%; /* Replace with the same width as the input */
