@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'hackathon-ui';
+  listForNatureOfGoods = ['fresh fish', 'live bees', 'pink dinosaur', 'consolidation'];
 }

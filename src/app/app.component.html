@@ -120,8 +120,11 @@
   </div>
   <div class="row mb-3">
     <div class="col-md-4">
-      <label for="natureOfGoods">Nature of Goods</label>
-      <input type="text" id="natureOfGoods" class="form-control" placeholder="">
+      <div class="form-group">
+        <label for="natureOfGoods">Nature of Goods</label>
+        <input type="text" id="natureOfGoods" class="form-control" placeholder="" list="listForNatureOfGoods">
+
+      </div>
     </div>
 
     <div class="col-md-4">
@@ -134,5 +137,16 @@
       <input type="text" id="hsCode" class="form-control" placeholder="">
     </div>
 
-
   </div>
+</div>
+
+
+<!-- DATALISTS -->
+<datalist id="listForNatureOfGoods">
+  <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
+</datalist>
+
+
+
+
+
