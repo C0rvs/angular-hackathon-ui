@@ -21,95 +21,115 @@ export class AppComponent {
      status = "";
      setup(){
       document.getElementById('file')?.addEventListener('change', function() { 
-        var fr=new FileReader(); 
+        const fr = new FileReader(); 
         let result: any; 
         let filesize: any; 
         let delimiters: any; 
-        let element =  document.getElementById('file_name')?.innerText;
+        let element = document.getElementById('file_name')?.innerText;
         let words: any;
-        
-        fr.onload=function(){ 
+        const fileInput = document.getElementById('file') as HTMLInputElement; // cast to HTMLInputElement
+      
+        fr.onload = function() { 
           result = fr.result
           filesize = result.length
           delimiters = ['\r\n',',','\t',' '];
-          if(element != null)
-          {
+          if(element != null) {
             element = "Supported format: csv, tsv, txt.";
-          for (let i in delimiters){
-            length = result.split(delimiters[i]).length
-            if(length!=filesize && length>1){
-               words=result.split(delimiters[i]);
-               element = document.getElementById('file')?.files[0].name;
+            if (fileInput.files != null && fileInput.files.length > 0) { // check if files is not null and has at least one item
+              for (let i in delimiters) {
+                length = result.split(delimiters[i]).length
+                if (length != filesize && length > 1) {
+                  words=result.split(delimiters[i]);
+                  if (fileInput.files[0] != null) { // check if the first item in files is not null
+                    element = fileInput.files[0].name; // access files property using the fileInput variable
+                  }
+                }
+              }
+            } else {
+              element = "No file selected.";
             }
           }
-
+        }    
+        if (fileInput.files != null && fileInput.files.length > 0) { // check if files is not null and has at least one item
+          fr.readAsText(fileInput.files[0]); // read file using the fileInput variable
         }
-         }    
-        fr.readAsText(this.files[0]); 
       }) 
-      document.getElementById('train')?.addEventListener('click',async ()=>{
-        let filtered_words; 
+      document.getElementById('train')?.addEventListener('click', async () => {
+        let filtered_words;
         let int_words;
-        let train_features; 
-        let train_labels; 
-        if(this.words.length<=0){
+        let train_features;
+        let train_labels;
+        let documentStatus; 
+        let documentTrain; 
+        if (this.words == null || this.words.length <= 0) {
           alert("No dataset");
-          return
+          return;
         }
-        document.getElementById("status").style.display = "block";
-        document.getElementById("train").style.display = "none";
-        try{
-          filtered_words = preprocessing_stage_1(this.words,this.max_len);
-          int_words = preprocessing_stage_2(filtered_words,this.max_len);
-          train_features = preprocessing_stage_3(int_words,this.max_len,this.sample_len);
-          train_labels = preprocessing_stage_4(int_words,this.max_len,this.sample_len);
-          train_features = preprocessing_stage_5(train_features,this.max_len,this.ALPHA_LEN);
-          train_labels = preprocessing_stage_5(train_labels,this.max_len,this.ALPHA_LEN);
-          this.model = await create_model(this.max_len,this.ALPHA_LEN)
+        documentStatus = document.getElementById("status");
+        if (documentStatus != null) {
+          documentStatus.style.display = "block";
+        }        
+        documentTrain = document.getElementById("train");
+        if (documentTrain != null) {
+          documentTrain.style.display = "none";
+        }
+
+        try {
+          filtered_words = preprocessing_stage_1(this.words, this.max_len);
+          int_words = preprocessing_stage_2(filtered_words, this.max_len);
+          train_features = preprocessing_stage_3(int_words, this.max_len, this.sample_len);
+          train_labels = preprocessing_stage_4(int_words, this.max_len, this.sample_len);
+          train_features = preprocessing_stage_5(train_features, this.max_len, this.ALPHA_LEN);
+          train_labels = preprocessing_stage_5(train_labels, this.max_len, this.ALPHA_LEN);
+          this.model = await create_model(this.max_len, this.ALPHA_LEN);
           await trainModel(this.model, train_features, train_labels);
           await this.model.save('downloads://autocorrect_model');
           //memory management
           train_features.dispose();
           train_labels.dispose();
-        }catch (err){
+        } catch (err) {
           alert("No enough GPU space. Please reduce your dataset size.");
         }
-        document.getElementById("status").style.display = "none";
-        document.getElementById("train").style.display = "block";
-        
-      })
-      document.getElementById('pred_features')
-      .addEventListener('keyup',()=>{
-        console.log( document.getElementById('pred_features').value);
+        documentStatus = document.getElementById("status");
+        if (documentStatus != null) {
+          documentStatus.style.display = "block";
+        }        
+        documentTrain = document.getElementById("train");
+        if (documentTrain != null) {
+          documentTrain.style.display = "none";
+        }
+      });
+      document.getElementById('pred_features')?.addEventListener('keyup',()=>{
+        console.log( document.getElementById('pred_features')?.value);
         let pattern = new RegExp("^[a-z]{1,"+max_len+"}$");
         let pred_features = []
-        pred_features.push(document.getElementById('pred_features').value);
-        if(pred_features[0].length<sample_len+1 ||  !pattern.test(pred_features[0])){
-           document.getElementById('pred_labels').value="";
+        pred_features.push(document.getElementById('pred_features')?.value);
+        if(pred_features[0].length<this.sample_len+1 ||  !pattern.test(pred_features[0])){
+           document.getElementById('pred_labels')?.value="";
           return;
         }
-        pred_features = preprocessing_stage_2(pred_features,max_len);
-        pred_features = preprocessing_stage_5(pred_features,max_len,ALPHA_LEN);
+        pred_features = preprocessing_stage_2(pred_features,this.max_len);
+        pred_features = preprocessing_stage_5(pred_features,this.max_len, this.ALPHA_LEN);
         let pred_labels = model.predict(pred_features);
         pred_labels = postprocessing_stage_1(pred_labels)
-        pred_labels = postprocessing_stage_2(pred_labels,max_len)[0]
-        document.getElementById('pred_labels').value=pred_labels.join("");
+        pred_labels = postprocessing_stage_2(pred_labels,this.max_len)[0]
+        document.getElementById('pred_labels')?.value=pred_labels.join("");
 
       })
-      document.getElementById("max_len").value=max_len
-      document.getElementById("epochs").value=epochs
-      document.getElementById("batch_size").value=batch_size
-      document.getElementById("pred_features").maxLength = document.getElementById("max_len").value;
+      document.getElementById("max_len")?.value=this.max_len
+      document.getElementById("epochs")?.value=this.epochs
+      document.getElementById("batch_size").value=this.batch_size
+      document.getElementById("pred_features")?.maxLength = document.getElementById("max_len")?.value;
 
     }
-    function showVizer(){
+    showVizer(){
       const visorInstance = tfvis.visor();
       if (!visorInstance.isOpen()) {
         visorInstance.toggle();
       }
     }
 
-    function preprocessing_stage_1(words,max_len){
+    preprocessing_stage_1(words:any,max_len:any){
       // function to filter the wordlist 
       // string [] = words
       // int = max_len
@@ -123,7 +143,7 @@ export class AppComponent {
       }
       return filtered_words;
     }
-    function preprocessing_stage_2(words,max_len){
+    preprocessing_stage_2(words:any,max_len:any){
       // function to convert the wordlist to int 
       // string [] = words
       // int = max_len
@@ -135,7 +155,7 @@ export class AppComponent {
       }
       return int_words;
     }
-    function preprocessing_stage_3(words,max_len,sample_len){
+    function preprocessing_stage_3(words:any,max_len:any,sample_len:any){
       // function to perform sliding window on wordlist
       // int [] = words
       // int = max_len, sample_len
@@ -150,7 +170,7 @@ export class AppComponent {
       }
       return input_data;
     }
-    function preprocessing_stage_4(words,max_len,sample_len){
+    function preprocessing_stage_4(words:any,max_len:any,sample_len:any){
       // function to ensure that training data size y == x
       // int [] = words
       // int = max_len, sample_len
@@ -164,7 +184,7 @@ export class AppComponent {
       }
       return output_data;
     }
-    function preprocessing_stage_5(words,max_len,alpha_len){
+    function preprocessing_stage_5(words:any,max_len:any,alpha_len:any){
       // function to convert int to onehot encoding 
       // int [] = words
       // int = max_len, alpha_len
@@ -176,7 +196,7 @@ export class AppComponent {
       //function to decode onehot encoding
       return words.argMax(-1).arraySync();
     }
-    function postprocessing_stage_2(words,max_len){
+    function postprocessing_stage_2(words:any,max_len:any){
       //function to convert int to words
       let results = [];
       for (let i in words){
@@ -184,7 +204,7 @@ export class AppComponent {
       }
       return results;
     }
-    function word_to_int (word,max_len){
+    function word_to_int (word:any,max_len:any){
       // char [] = word
       // int = max_len
       let encode = [];
@@ -198,7 +218,7 @@ export class AppComponent {
       }
       return encode;
     }
-    function int_to_word (word,max_len){
+    function int_to_word (word:any,max_len:any){
       // int [] = word
       // int = max_len
       let decode = []
@@ -212,7 +232,7 @@ export class AppComponent {
       }
       return decode;
     }
-    async function create_model(max_len,alpha_len){
+    async function create_model(max_len:any,alpha_len:any){
       var model = tf.sequential();
       await model.add(tf.layers.lstm({
         units:alpha_len*2,
@@ -233,7 +253,7 @@ export class AppComponent {
       model.summary();
       return model
     }
-    async function trainModel(model, train_features, train_labels) {
+    async function trainModel(model:any, train_features:any, train_labels:any) {
       status = "Training Model";
       console.log(status)
       // Prepare the model for training.
@@ -256,7 +276,6 @@ export class AppComponent {
       
       return;
     }
-    setup();
  
 }
 
