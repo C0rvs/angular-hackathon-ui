@@ -3,153 +3,154 @@
   Shipment Information
 </h3>
 
-<div class="container ">
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="prefix">Prefix</label>
-          <input type="text" id="prefix" class="form-control" placeholder="">
+<form>
+  <div class="container ">
+    <div class="row mb-2">
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="form-label-group">
+            <label for="prefix">Prefix</label>
+            <input type="text" id="prefix" class="form-control" placeholder="">
+          </div>
+          <div class="form-label-group">
+            <label for="serial">Serial</label>
+            <div class="input-group">
+              <input type="text" id="serial" class="form-control" placeholder="">
+              <div class="input-group-text">
+                <input type="checkbox" aria-label="Checkbox for serial">
+                <label for="serialCheckbox">Master</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-label-group">
+            <label for="issueCarrier">Issue Carrier</label>
+            <input type="text" id="issueCarrier" class="form-control" placeholder="">
+          </div>
         </div>
-        <div class="form-label-group">
-          <label for="serial">Serial</label>
-          <div class="input-group">
-            <input type="text" id="serial" class="form-control" placeholder="">
-            <div class="input-group-text">
-              <input type="checkbox" aria-label="Checkbox for serial">
-              <label for="serialCheckbox">Master</label>
+      </div>
+
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="form-label-group">
+            <label for="agent">Agent</label>
+            <input type="text" id="agent" class="form-control" placeholder="">
+          </div>
+          <div class="form-label-group">
+            <label for="area">Area</label>
+            <input type="text" id="area" class="form-control" placeholder="">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="form-label-group">
+            <label for="origin">Origin</label>
+            <div class="input-group">
+              <input type="text" id="origin" class="form-control" placeholder="">
+              <span class="input-group-text">
+                <i class='fas fa-arrow-right'></i>
+              </span>
+            </div>
+
+          </div>
+          <div class="form-label-group">
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" class="form-control" placeholder="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="pieces">Pieces</label>
+            <input type="text" id="pieces" class="form-control" placeholder="">
+          </div>
+          <div class="col-md-4">
+            <label for="weight">Weight</label>
+            <div class="input-group">
+              <input type="text" id="weight" class="form-control" placeholder="">
+              <span class="input-group-text">kg</span>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="volume">Volume</label>
+            <div class="input-group">
+              <input type="text" id="volume" class="form-control" placeholder="">
+              <span class="input-group-text">m3</span>
             </div>
           </div>
         </div>
-        <div class="form-label-group">
-          <label for="issueCarrier">Issue Carrier</label>
-          <input type="text" id="issueCarrier" class="form-control" placeholder="">
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="agent">Agent</label>
-          <input type="text" id="agent" class="form-control" placeholder="">
-        </div>
-        <div class="form-label-group">
-          <label for="area">Area</label>
-          <input type="text" id="area" class="form-control" placeholder="">
-        </div>
       </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="origin">Origin</label>
-          <div class="input-group">
-            <input type="text" id="origin" class="form-control" placeholder="">
-            <span class="input-group-text">
-              <i class='fas fa-arrow-right'></i>
-            </span>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-5">
+            <label for="chargeableWeight">Chargeable Weight</label>
+            <div class="input-group">
+              <input type="text" id="chargeableWeight" class="form-control" placeholder="">
+              <span class="input-group-text">kg</span>
+            </div>
           </div>
-
-        </div>
-        <div class="form-label-group">
-          <label for="destination">Destination</label>
-          <input type="text" id="destination" class="form-control" placeholder="">
+          <div class="col-md-3">
+            <label for="priceClass">Price Class</label>
+            <input type="text" id="priceClass" class="form-control" placeholder="">
+          </div>
+          <div class="col-md-3">
+            <label for="currency">Currency</label>
+            <input type="text" id="currency" class="form-control" placeholder="">
+          </div>
         </div>
       </div>
+
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="product">Product</label>
+            <input type="text" id="product" class="form-control" placeholder="">
+          </div>
+          <div class="col-md-6">
+            <label for="priority">Priority</label>
+            <input type="text" id="priority" class="form-control" placeholder="" disabled>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-md-4">
+        <div class="form-group">
+
+
+          <label for="natureOfGoods">Nature of Goods</label>
+          <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
+            (input)="onSearch()">
+
+          <div *ngIf="filteredOptions.length > 0" class="dropdown">
+            <ul>
+              <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
+        <input type="text" id="specialHandlingcodes" class="form-control" placeholder="">
+      </div>
+
+      <div class="col-md-4">
+        <label for="hsCode">Harmonized System (HS) Codes</label>
+        <input type="text" id="hsCode" class="form-control" placeholder="">
+      </div>
+
+    </div>
+    <div class="save-container">
+      <button class="save-btn">
+        <i class="fas fa-save"></i> Save
+      </button>
     </div>
   </div>
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="pieces">Pieces</label>
-          <input type="text" id="pieces" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-4">
-          <label for="weight">Weight</label>
-          <div class="input-group">
-            <input type="text" id="weight" class="form-control" placeholder="">
-            <span class="input-group-text">kg</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="volume">Volume</label>
-          <div class="input-group">
-            <input type="text" id="volume" class="form-control" placeholder="">
-            <span class="input-group-text">m3</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-5">
-          <label for="chargeableWeight">Chargeable Weight</label>
-          <div class="input-group">
-            <input type="text" id="chargeableWeight" class="form-control" placeholder="">
-            <span class="input-group-text">kg</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="priceClass">Price Class</label>
-          <input type="text" id="priceClass" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-3">
-          <label for="currency">Currency</label>
-          <input type="text" id="currency" class="form-control" placeholder="">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-6">
-          <label for="product">Product</label>
-          <input type="text" id="product" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-6">
-          <label for="priority">Priority</label>
-          <input type="text" id="priority" class="form-control" placeholder="" disabled>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="form-group">
-
-
-        <label for="natureOfGoods">Nature of Goods</label>
-        <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
-          (input)="onSearch()">
-
-        <div *ngIf="filteredOptions.length > 0" class="dropdown">
-          <ul>
-            <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
-      <input type="text" id="specialHandlingcodes" class="form-control" placeholder="">
-    </div>
-
-    <div class="col-md-4">
-      <label for="hsCode">Harmonized System (HS) Codes</label>
-      <input type="text" id="hsCode" class="form-control" placeholder="">
-    </div>
-
-  </div>
-</div>
-
-
-<!-- DATALISTS -->
-<datalist id="listForNatureOfGoods">
-  <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
-</datalist>
+</form>
