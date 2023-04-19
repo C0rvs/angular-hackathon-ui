@@ -27,8 +27,8 @@ export class AppComponent {
 
   type: string = "warning";
   bookingProgress: number = 0;
-  type2: string = "warning";
   selectedMandatory: String[] = [];
+  selectedNonMand: String[] = [];
 
   progressValue(event: any){
     const arrayList = ["prefix", "serial", "issueCarrier", "agent","origin","destination","weight","natureOfGoods","hsCode"];
@@ -37,36 +37,39 @@ export class AppComponent {
     const arrNonManLength = nonMandList.length;
     const inputValue = event.target.value;
     const selectedId = event.target.id;
-console.log('selectedId ' + selectedId);
     if (inputValue.length != 0)
     {
-console.log('arrayList.indexOf(selectedId) ' + arrayList.indexOf(selectedId));
       if (arrayList.indexOf(selectedId) >= 0 && this.selectedMandatory.indexOf(selectedId) < 0) {
-        //console.log('In the list, trying adding into the selected');
+        //console.log('In the mand list, trying adding into the selected');
         this.selectedMandatory.push(selectedId);
-      } else {
-        //console.log('Not In the list, trying adding into the selected / in the list, aldy in selected');
+      } else if (nonMandList.indexOf(selectedId) >= 0 && this.selectedNonMand.indexOf(selectedId) < 0) {
+        //console.log('In the nonMand list, trying adding into the selected');
+        this.selectedNonMand.push(selectedId);
       }
     } else {
       if ((arrayList.indexOf(selectedId) >= 0) && (this.selectedMandatory.indexOf(selectedId) >= 0)) {
-        //console.log('In the list, trying delete from the list as empty');
+        //console.log('In the mand list, trying delete from the list as empty');
         this.selectedMandatory.forEach((element,index)=>{
           if(element==selectedId) this.selectedMandatory.splice(index,1);
+          });
+      } else if ((nonMandList.indexOf(selectedId) >= 0) && (this.selectedNonMand.indexOf(selectedId) >= 0)) {
+        //console.log('In the nonMand list, trying delete from the list as empty');
+        this.selectedNonMand.forEach((element,index)=>{
+          if(element==selectedId) this.selectedNonMand.splice(index,1);
           });
       }
     }
     const mandatoryCount = this.selectedMandatory.length;
-    //console.log('mandatoryCount ' + mandatoryCount);
-    //console.log('arrManLength ' + arrManLength);
-    //console.log('divide' + ((mandatoryCount) / (arrManLength)));
-    //console.log('result' + ((mandatoryCount / arrManLength) * 100));
-    this.bookingProgress = Math.round((mandatoryCount / arrManLength) * 100);
+    const nonMandCount = this.selectedNonMand.length;
+    const sumScore = (arrManLength * 3) + nonMandCount;
+    const selectScore = (mandatoryCount * 3) + nonMandCount;
+    this.bookingProgress = Math.round((selectScore / sumScore) * 100);
     if (this.bookingProgress < 30) {
-      this.type2 = "warning";
+      this.type = "warning";
     } else if (this.bookingProgress < 75) {
-      this.type2 = "info";
+      this.type = "info";
     } else if (this.bookingProgress >= 75) {
-      this.type2 = "success";
+      this.type = "success";
     }
   }
 }
