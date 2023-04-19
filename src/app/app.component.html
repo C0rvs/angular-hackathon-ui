@@ -1,20 +1,22 @@
-<h3>
-  <span>&#9312;</span>
-  Shipment Information
-</h3>
-
 <div class="container ">
+  <h3>
+    <span>&#9312;</span>
+    Shipment Information
+  </h3>
+
   <div class="row mb-2">
     <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="prefix">Prefix</label>
-          <input type="text" id="prefix" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
+      <div class="input-group overflowLabel">
+        <div class="form-label-group col-md-2">
+          <label for="prefix">Air WayBill Number</label>
+          <input type="text" id="prefix" class="form-control" placeholder="Prefix" (keyup)="progressValue($event)"
+            required>
         </div>
         <div class="form-label-group">
-          <label for="serial">Serial</label>
+          <label for="serial"></label>
           <div class="input-group">
-            <input type="text" id="serial" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
+            <input type="text" id="serial" class="form-control" placeholder="Serial" (keyup)="progressValue($event)"
+              required>
             <div class="input-group-text">
               <input type="checkbox" aria-label="Checkbox for serial">
               <label for="serialCheckbox">Master</label>
@@ -22,8 +24,9 @@
           </div>
         </div>
         <div class="form-label-group">
-          <label for="issueCarrier">Issue Carrier</label>
-          <input type="text" id="issueCarrier" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
+          <label for="issueCarrier">Carrier</label>
+          <input type="text" id="issueCarrier" class="form-control" placeholder="" (keyup)="progressValue($event)"
+            required>
         </div>
       </div>
     </div>
@@ -32,7 +35,7 @@
       <div class="input-group">
         <div class="form-label-group">
           <label for="agent">Agent</label>
-          <input type="text" id="agent" class="form-control" placeholder="" (keyup)="progressValue($event)">
+          <input type="text" id="agent" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
         </div>
         <div class="form-label-group">
           <label for="area">Area</label>
@@ -46,7 +49,7 @@
         <div class="form-label-group">
           <label for="origin">Origin</label>
           <div class="input-group">
-            <input type="text" id="origin" class="form-control" placeholder="" (keyup)="progressValue($event)">
+            <input type="text" id="origin" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
             <span class="input-group-text">
               <i class='fas fa-arrow-right'></i>
             </span>
@@ -55,7 +58,8 @@
         </div>
         <div class="form-label-group">
           <label for="destination">Destination</label>
-          <input type="text" id="destination" class="form-control" placeholder="" (keyup)="progressValue($event)">
+          <input type="text" id="destination" class="form-control" placeholder="" (keyup)="progressValue($event)"
+            required>
         </div>
       </div>
     </div>
@@ -65,12 +69,12 @@
       <div class="row">
         <div class="col-md-4">
           <label for="pieces">Pieces</label>
-          <input type="text" id="pieces" class="form-control" placeholder="" (keyup)="progressValue($event)">
+          <input type="text" id="pieces" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
         </div>
         <div class="col-md-4">
           <label for="weight">Weight</label>
           <div class="input-group">
-            <input type="text" id="weight" class="form-control" placeholder="" (keyup)="progressValue($event)">
+            <input type="text" id="weight" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
             <span class="input-group-text">kg</span>
           </div>
         </div>
@@ -90,12 +94,13 @@
         <div class="col-md-5">
           <label for="chargeableWeight">Chargeable Weight</label>
           <div class="input-group">
-            <input type="text" id="chargeableWeight" class="form-control" placeholder="" (keyup)="progressValue($event)">
+            <input type="text" id="chargeableWeight" class="form-control" placeholder=""
+              (keyup)="progressValue($event)">
             <span class="input-group-text">kg</span>
           </div>
         </div>
         <div class="col-md-3">
-          <label for="priceClass">Price Class</label>
+          <label for="priceClass">Price Remark</label>
           <input type="text" id="priceClass" class="form-control" placeholder="" (keyup)="progressValue($event)">
         </div>
         <div class="col-md-3">
@@ -108,7 +113,7 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-md-6">
-          <label for="product">Product</label>
+          <label for="product">Airline product information</label>
           <input type="text" id="product" class="form-control" placeholder="" (keyup)="progressValue($event)">
         </div>
         <div class="col-md-6">
@@ -120,29 +125,33 @@
   </div>
   <div class="row mb-2">
     <div class="col-md-4">
-      <div class="form-group">
+      <div class="input-group">
+        <div class="form-label-group col-md-8">
+          <label for="natureOfGoods">Nature of Goods</label>
+          <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
+            (input)="onSearch()" (keyup)="progressValue($event)" required>
+          <div class="dropdown" *ngIf="filteredOptions.length > 0">
+            <ul class="dropdown-list">
+              <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
+            </ul>
+          </div>
 
-
-        <label for="natureOfGoods">Nature of Goods</label>
-        <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
-          (input)="onSearch()" (keyup)="progressValue($event)">
-
-        <div *ngIf="filteredOptions.length > 0" class="dropdown">
-          <ul>
-            <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
-          </ul>
+        </div>
+        <div class="form-label-group col-md-4">
+          <label for="hsCode">HS Codes</label>
+          <input type="text" id="hsCode" class="form-control" placeholder="" (keyup)="progressValue($event)"
+            minlength="6" maxlength="10" required>
         </div>
       </div>
+
+
+
     </div>
+
 
     <div class="col-md-4">
       <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
       <input type="text" id="specialHandlingcodes" class="form-control" placeholder="" (keyup)="progressValue($event)">
-    </div>
-
-    <div class="col-md-4">
-      <label for="hsCode">Harmonized System (HS) Codes</label>
-      <input type="text" id="hsCode" class="form-control" placeholder="" (keyup)="progressValue($event)">
     </div>
 
   </div>
@@ -150,12 +159,12 @@
 
 
 <!-- DATALISTS -->
-<datalist id="listForNatureOfGoods">
+<datalist class="scrollable" id="listForNatureOfGoods">
   <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
 </datalist>
 
-<br/>
-<br/>
+<br />
+<br />
 <div class="container ">
   <div class="row mb-2">
     <div class="col-md-2">
@@ -164,13 +173,9 @@
       </h3>
     </div>
     <div class="col-md-10">
-      <p><ngb-progressbar
-              type="{{type}}"
-              [value]="bookingProgress"
-              [striped]="true"
-              [animated]="true"
-              [style]="{height: '20px'}">{{bookingProgress}} %
-      </ngb-progressbar></p>
+      <p><ngb-progressbar type="{{type}}" [value]="bookingProgress" [striped]="true" [animated]="true"
+          [style]="{height: '20px'}">{{bookingProgress}} %
+        </ngb-progressbar></p>
     </div>
   </div>
 </div>

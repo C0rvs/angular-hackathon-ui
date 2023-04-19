@@ -1,5 +1,5 @@
 h3 span {
-    font-size: 38px;
+    font-size: 1.2rem;
 }
 
 input {
@@ -16,6 +16,7 @@ li {
 }
 
 .dropdown {
+    position: relative;
     width: 100%;
     border: 1px solid #ccc;
     background-color: #fff;
@@ -24,6 +25,16 @@ li {
     margin: 0;
     list-style: none;
 }
+
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+}
+
 
 .dropdown p {
     padding: 0;
@@ -37,6 +48,10 @@ li {
 #prefix {
     border-right: 1px dotted black;
     border-left: 1px solid black;
+}
+
+.overflowLabel {
+    white-space: nowrap;
 }
 
 #serial {
@@ -71,24 +86,6 @@ li {
     display: inline-block;
 }
 
-/* input {
-    border: 1px solid transparent;
-    background-color: #f1f1f1;
-    padding: 10px;
-    font-size: 16px;
-} */
-
-/* input[type=text] {
-    background-color: #f1f1f1;
-    width: 100%;
-} */
-
-/* input[type=submit] {
-    background-color: DodgerBlue;
-    color: #fff;
-    cursor: pointer;
-} */
-
 .autocomplete-items {
     position: absolute;
     border: 1px solid #d4d4d4;
@@ -118,3 +115,14 @@ li {
     background-color: DodgerBlue !important;
     color: #ffffff;
 }
+
+input:required:invalid {
+    border: 2px solid red;
+  }
+  input:required:valid {
+    border: 2px solid green;
+  }
+
+  
+  
+  
