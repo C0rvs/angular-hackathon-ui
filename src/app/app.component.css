@@ -1,6 +1,9 @@
 h3 span{
     font-size: 38px;
 }
+ul{
+  width: 100%;
+}
 input {
     border-top: 1px solid black;
     border-right: 1px solid black;
@@ -8,9 +11,13 @@ input {
     border-left: 1px solid black;
     font-size: 12px;
 }
+p.highlighted {
+  background-color:  #ADD8E6;
+}
+filteredSuggestions
 
-ul, li{
-    padding-left: 1rem;
+.dropdown-hidden {
+  display: none;
 }
 .dropdown {
     width: 100%;
@@ -61,3 +68,40 @@ ul, li{
 }
 
 
+  /*the container must be positioned relative:*/
+  .autocomplete {
+    position: relative;
+    display: inline-block;
+  }
+  
+
+  
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
+  
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+  }
+  
+  /*when hovering an item:*/
+  .autocomplete-items div:hover {
+    background-color: #e9e9e9; 
+  }
+  
+  /*when navigating through the items using the arrow keys:*/
+  .autocomplete-active {
+    background-color: DodgerBlue !important; 
+    color: #ffffff; 
+  }

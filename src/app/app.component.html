@@ -122,16 +122,14 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="natureOfGoods">Nature of Goods</label>
-        <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm" (input)="onSearch()">
-      
-        <div *ngIf="filteredOptions.length > 0" class="dropdown">
-          <ul>
-            <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
-          </ul>
-        </div>
-      </div>
-    </div>
-
+        <input type="text" [(ngModel)]="userInput" (keydown)="onKeyDown($event)" (keyup)="filterSuggestions()">
+        <ul *ngIf="userInput != '' ">
+          <p *ngFor="let suggestion of filteredSuggestions; let i = index"
+          [ngClass]="{'highlighted': i === highlightedIndex}" 
+          (click)="onSuggestionSelected(suggestion)" (mouseenter)="onSuggestionHover(i)">
+          {{ suggestion }}
+        </p>
+        </ul>
     <div class="col-md-4">
       <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
       <input type="text" id="specialHandlingcodes" class="form-control" placeholder="">
@@ -146,10 +144,12 @@
 </div>
 
 
-<!-- DATALISTS -->
+<!-- DATALISTS 
 <datalist id="listForNatureOfGoods">
   <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
 </datalist>
+-->
+
 
 
 
