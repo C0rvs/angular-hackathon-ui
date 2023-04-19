@@ -105,7 +105,7 @@
         </div>
         <div class="col-md-3">
           <label for="currency">Currency</label>
-          <input type="text" id="currency" class="form-control" placeholder="" (keyup)="progressValue($event)">
+          <input type="text" id="currency" class="form-control" placeholder="" (keyup)="progressValue($event)" list="currencyList">
         </div>
       </div>
     </div>
@@ -161,6 +161,10 @@
 <!-- DATALISTS -->
 <datalist class="scrollable" id="listForNatureOfGoods">
   <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
+</datalist>
+
+<datalist class="scrollable" id="currencyList">
+  <option *ngFor="let Currency of listForCurrency" [value]="Currency">{{Currency}}</option>
 </datalist>
 
 <br />
