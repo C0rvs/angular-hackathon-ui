@@ -2,7 +2,8 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
-
+import * as tf from '@tensorflow/tfjs';
+import * as tfvis from '@tensorflow/tfjs-vis'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,16 +11,17 @@ import { Observable, map, startWith } from 'rxjs';
 })
 export class AppComponent {
 
-     const ALPHA_LEN = 26;
+     ALPHA_LEN = 26;
      sample_len = 1;
      batch_size = 32;
      epochs = 250;
      max_len = 10;
      words = [];
-     model = create_model(this.max_len,this.ALPHA_LEN);
-     
+     model = this.create_model(this.max_len,this.ALPHA_LEN);
      status = "";
      setup(){
+      let documentMaxLen = document.getElementById("max_len") as HTMLInputElement, documentEpochs = document.getElementById("epochs") as HTMLInputElement, 
+      documentBatchSize = document.getElementById("batch_size") as HTMLInputElement, documentPredFeatures = document.getElementById("pred_features") as HTMLInputElement;
       document.getElementById('file')?.addEventListener('change', function() { 
         const fr = new FileReader(); 
         let result: any; 
@@ -27,7 +29,7 @@ export class AppComponent {
         let delimiters: any; 
         let element = document.getElementById('file_name')?.innerText;
         let words: any;
-        const fileInput = document.getElementById('file') as HTMLInputElement; // cast to HTMLInputElement
+        let fileInput = document.getElementById('file') as HTMLInputElement; // cast to HTMLInputElement
       
         fr.onload = function() { 
           result = fr.result
@@ -75,14 +77,14 @@ export class AppComponent {
         }
 
         try {
-          filtered_words = preprocessing_stage_1(this.words, this.max_len);
-          int_words = preprocessing_stage_2(filtered_words, this.max_len);
-          train_features = preprocessing_stage_3(int_words, this.max_len, this.sample_len);
-          train_labels = preprocessing_stage_4(int_words, this.max_len, this.sample_len);
-          train_features = preprocessing_stage_5(train_features, this.max_len, this.ALPHA_LEN);
-          train_labels = preprocessing_stage_5(train_labels, this.max_len, this.ALPHA_LEN);
-          this.model = await create_model(this.max_len, this.ALPHA_LEN);
-          await trainModel(this.model, train_features, train_labels);
+          filtered_words = this.preprocessing_stage_1(this.words, this.max_len);
+          int_words = this.preprocessing_stage_2(filtered_words, this.max_len);
+          train_features = this.preprocessing_stage_3(int_words, this.max_len, this.sample_len);
+          train_labels = this.preprocessing_stage_4(int_words, this.max_len, this.sample_len);
+          train_features = this.preprocessing_stage_5(train_features, this.max_len, this.ALPHA_LEN);
+          train_labels = this.preprocessing_stage_5(train_labels, this.max_len, this.ALPHA_LEN);
+          this.model = await this.create_model(this.max_len, this.ALPHA_LEN);
+          await this.trainModel(this.model, train_features, train_labels);
           await this.model.save('downloads://autocorrect_model');
           //memory management
           train_features.dispose();
@@ -100,26 +102,49 @@ export class AppComponent {
         }
       });
       document.getElementById('pred_features')?.addEventListener('keyup',()=>{
-        console.log( document.getElementById('pred_features')?.value);
-        let pattern = new RegExp("^[a-z]{1,"+max_len+"}$");
+        let documentPredLabels = document.getElementById('pred_labels') as HTMLInputElement; 
+        
+        if(documentPredFeatures != null)
+          console.log( documentPredFeatures.value);
+        let pattern = new RegExp("^[a-z]{1,"+this.max_len+"}$");
         let pred_features = []
-        pred_features.push(document.getElementById('pred_features')?.value);
+        if(documentPredFeatures != null)
+          pred_features.push(documentPredFeatures.value);
         if(pred_features[0].length<this.sample_len+1 ||  !pattern.test(pred_features[0])){
-           document.getElementById('pred_labels')?.value="";
+          if(documentPredLabels != null)
+          {
+            documentPredLabels.value="";
+
+          }
           return;
         }
-        pred_features = preprocessing_stage_2(pred_features,this.max_len);
-        pred_features = preprocessing_stage_5(pred_features,this.max_len, this.ALPHA_LEN);
-        let pred_labels = model.predict(pred_features);
-        pred_labels = postprocessing_stage_1(pred_labels)
-        pred_labels = postprocessing_stage_2(pred_labels,this.max_len)[0]
-        document.getElementById('pred_labels')?.value=pred_labels.join("");
+        pred_features = this.preprocessing_stage_2(pred_features,this.max_len);
+        pred_features = this.preprocessing_stage_5(pred_features,this.max_len, this.ALPHA_LEN).array;
+        let pred_labels = this.model.predict(pred_features);
+        pred_labels = this.postprocessing_stage_1(pred_labels)
+        pred_labels = this.postprocessing_stage_2(pred_labels,this.max_len)[0]
+        if(documentPredLabels != null)
+        {
+          documentPredLabels.value = pred_labels.join("");
+        }
 
       })
-      document.getElementById("max_len")?.value=this.max_len
-      document.getElementById("epochs")?.value=this.epochs
-      document.getElementById("batch_size").value=this.batch_size
-      document.getElementById("pred_features")?.maxLength = document.getElementById("max_len")?.value;
+      if(documentMaxLen != null)
+      {
+        documentMaxLen.value = this.max_len.toString()
+      }
+      if(documentEpochs != null)
+      {
+        documentEpochs.value = this.epochs.toString()
+      }
+      if(documentBatchSize != null)
+      {
+        documentBatchSize.value = this.batch_size.toString()
+      }
+      if(documentPredFeatures != null)
+      {
+        documentPredFeatures.maxLength = +documentMaxLen.value; 
+      }
 
     }
     showVizer(){
@@ -151,11 +176,11 @@ export class AppComponent {
       console.log(status);
       let int_words = [];
       for (let i in words){
-        int_words.push(word_to_int(words[i],max_len))
+        int_words.push(this.word_to_int(words[i],max_len))
       }
       return int_words;
     }
-    function preprocessing_stage_3(words:any,max_len:any,sample_len:any){
+    preprocessing_stage_3(words:any,max_len:any,sample_len:any){
       // function to perform sliding window on wordlist
       // int [] = words
       // int = max_len, sample_len
@@ -170,7 +195,7 @@ export class AppComponent {
       }
       return input_data;
     }
-    function preprocessing_stage_4(words:any,max_len:any,sample_len:any){
+    preprocessing_stage_4(words:any,max_len:any,sample_len:any){
       // function to ensure that training data size y == x
       // int [] = words
       // int = max_len, sample_len
@@ -184,27 +209,27 @@ export class AppComponent {
       }
       return output_data;
     }
-    function preprocessing_stage_5(words:any,max_len:any,alpha_len:any){
+    preprocessing_stage_5(words:any,max_len:any,alpha_len:any){
       // function to convert int to onehot encoding 
       // int [] = words
       // int = max_len, alpha_len
       status = "Preprocessing Data 5";
       console.log(status);
-      return tf.oneHot(tf.tensor2d(words,[words.length,max_len],dtype='int32'), alpha_len);
+      return tf.oneHot(tf.tensor2d(words,[words.length,max_len],'int32'), alpha_len);
     }
-    function postprocessing_stage_1(words){
+    postprocessing_stage_1(words:any){
       //function to decode onehot encoding
       return words.argMax(-1).arraySync();
     }
-    function postprocessing_stage_2(words:any,max_len:any){
+    postprocessing_stage_2(words:any,max_len:any){
       //function to convert int to words
       let results = [];
       for (let i in words){
-        results.push(int_to_word(words[i],max_len));
+        results.push(this.int_to_word(words[i],max_len));
       }
       return results;
     }
-    function word_to_int (word:any,max_len:any){
+    word_to_int (word:any,max_len:any){
       // char [] = word
       // int = max_len
       let encode = [];
@@ -218,7 +243,7 @@ export class AppComponent {
       }
       return encode;
     }
-    function int_to_word (word:any,max_len:any){
+    int_to_word (word:any,max_len:any){
       // int [] = word
       // int = max_len
       let decode = []
@@ -232,7 +257,7 @@ export class AppComponent {
       }
       return decode;
     }
-    async function create_model(max_len:any,alpha_len:any){
+    async create_model(max_len:any,alpha_len:any){
       var model = tf.sequential();
       await model.add(tf.layers.lstm({
         units:alpha_len*2,
@@ -246,14 +271,14 @@ export class AppComponent {
       await model.add(tf.layers.timeDistributed({
          layer: tf.layers.dense({
           units: alpha_len,
-          dropout:0.2,
+          //TAKE NOTE, Idropout:0.2,
           activation:"softmax"
         })
       }));
       model.summary();
       return model
     }
-    async function trainModel(model:any, train_features:any, train_labels:any) {
+    async trainModel(model:any, train_features:any, train_labels:any) {
       status = "Training Model";
       console.log(status)
       // Prepare the model for training.
@@ -263,8 +288,8 @@ export class AppComponent {
         metrics: ['mse'] 
       })
       await model.fit(train_features, train_labels, {
-        epochs,
-        batch_size,
+        epochs: this.epochs,
+        batch_size: this.batch_size,
         shuffle: true,
         callbacks: tfvis.show.fitCallbacks(
           { name: 'Training' },
