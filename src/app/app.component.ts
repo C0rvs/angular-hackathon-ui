@@ -24,6 +24,51 @@ export class AppComponent {
     this.searchTerm = option;
     this.filteredOptions = [];
   }
+
+  type: string = "warning";
+  bookingProgress: number = 0;
+  type2: string = "warning";
+  selectedMandatory: String[] = [];
+
+  progressValue(event: any){
+    const arrayList = ["prefix", "serial", "issueCarrier", "agent","origin","destination","weight","natureOfGoods","hsCode"];
+    const nonMandList = ["area","pieces","volume","chargeableWeight","priceClass","currency","product","specialHandlingcodes"];
+    const arrManLength = arrayList.length;
+    const arrNonManLength = nonMandList.length;
+    const inputValue = event.target.value;
+    const selectedId = event.target.id;
+console.log('selectedId ' + selectedId);
+    if (inputValue.length != 0)
+    {
+console.log('arrayList.indexOf(selectedId) ' + arrayList.indexOf(selectedId));
+      if (arrayList.indexOf(selectedId) >= 0 && this.selectedMandatory.indexOf(selectedId) < 0) {
+        //console.log('In the list, trying adding into the selected');
+        this.selectedMandatory.push(selectedId);
+      } else {
+        //console.log('Not In the list, trying adding into the selected / in the list, aldy in selected');
+      }
+    } else {
+      if ((arrayList.indexOf(selectedId) >= 0) && (this.selectedMandatory.indexOf(selectedId) >= 0)) {
+        //console.log('In the list, trying delete from the list as empty');
+        this.selectedMandatory.forEach((element,index)=>{
+          if(element==selectedId) this.selectedMandatory.splice(index,1);
+          });
+      }
+    }
+    const mandatoryCount = this.selectedMandatory.length;
+    //console.log('mandatoryCount ' + mandatoryCount);
+    //console.log('arrManLength ' + arrManLength);
+    //console.log('divide' + ((mandatoryCount) / (arrManLength)));
+    //console.log('result' + ((mandatoryCount / arrManLength) * 100));
+    this.bookingProgress = Math.round((mandatoryCount / arrManLength) * 100);
+    if (this.bookingProgress < 30) {
+      this.type2 = "warning";
+    } else if (this.bookingProgress < 75) {
+      this.type2 = "info";
+    } else if (this.bookingProgress >= 75) {
+      this.type2 = "success";
+    }
+  }
 }
   
 
