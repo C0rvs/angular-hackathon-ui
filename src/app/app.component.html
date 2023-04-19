@@ -1,157 +1,89 @@
-<h3>
-  <span>&#9312;</span>
-  Shipment Information
-</h3>
+<head>
+  <title>Auto-complete</title>
 
-<div class="container ">
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="prefix">Prefix</label>
-          <input type="text" id="prefix" class="form-control" placeholder="">
+  <!-- Import TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+  <!-- Import tfjs-vis -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+  <!-- Import visual frameworks -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+  <div class="container p-0">
+    <div class="container p-0" >
+      <header >
+        <nav class="navbar navbar-dark bg-dark rounded">
+          <a class="navbar-brand">
+            <i class="fas fa-comment"></i>
+            <strong>Auto-complete</strong>
+          </a>
+        </nav>
+      </header>
+    </div>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Input Text</label>
+          <input class="form-control" type="input" id="pred_features" pattern="^[a-z]*$">
         </div>
-        <div class="form-label-group">
-          <label for="serial">Serial</label>
-          <div class="input-group">
-            <input type="text" id="serial" class="form-control" placeholder="">
-            <div class="input-group-text">
-              <input type="checkbox" aria-label="Checkbox for serial">
-              <label for="serialCheckbox">Master</label>
-            </div>
+        <div class="col">
+          <label class="form-label">Predicted Text</label>
+          <input class="form-control" type="input" id="pred_labels" disabled>
+        </div>
+      </div>
+    <div>
+    <div class="card mt-3 bg-light">
+      <h5 class="card-header">Training Parameters</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-2">
+            <label>Max word length</label>
+          </div>
+          <div class="col-10"> 
+            <input type="number" id="max_len" onchange="max_len=parseInt(this.value);document.getElementById('pred_features').maxLength=parseInt(this.value)" min=1>
           </div>
         </div>
-        <div class="form-label-group">
-          <label for="issueCarrier">Issue Carrier</label>
-          <input type="text" id="issueCarrier" class="form-control" placeholder="">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="agent">Agent</label>
-          <input type="text" id="agent" class="form-control" placeholder="">
-        </div>
-        <div class="form-label-group">
-          <label for="area">Area</label>
-          <input type="text" id="area" class="form-control" placeholder="">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="input-group">
-        <div class="form-label-group">
-          <label for="origin">Origin</label>
-          <div class="input-group">
-            <input type="text" id="origin" class="form-control" placeholder="">
-            <span class="input-group-text">
-              <i class='fas fa-arrow-right'></i>
-            </span>
+        <div class="row mt-3">
+          <div class="col-2">
+            <label>Epochs</label>
           </div>
-
+          <div class="col-10"> 
+            <input type="number" id="epochs" onchange="epochs=parseInt(this.value)" min=1>
+          </div>
         </div>
-        <div class="form-label-group">
-          <label for="destination">Destination</label>
-          <input type="text" id="destination" class="form-control" placeholder="">
+        <div class="row mt-3">
+          <div class="col-2">
+            <label>Batch Size</label>
+          </div>
+          <div class="col-10"> 
+            <input type="number" id="batch_size" onchange="batch_size=parseInt(this.value)" min=1>
+          </div>
         </div>
+        <div class="row mt-3">
+          <div class="col-2">
+            <button class="btn btn-secondary btn-sm" style="cursor:pointer;" type="button" onclick="document.getElementById('file').click()"> 
+              <i class="fa fa-upload" aria-hidden="true"></i>
+             Dataset
+            </button>
+            <input style="display:none;"type="file" id="file" >
+          </div>
+          <div class="col-10"> 
+            <label id="file_name">Supported format: csv, tsv, txt.</label>
+          </div>
+        </div>
+       
       </div>
+    </div>
+    <input class="btn btn-secondary btn-block mt-3" type="button" id="train" value="Train">
+    <div class="d-flex justify-content-center mt-3" onclick="showVizer()">
+      <span class="spinner-grow spinner-grow" style="display:none" id="status" aria-hidden="true"></span>
+    </div>
+    <div class="float-right">
+      <a href="https://www.youtube.com/user/chirpieful">
+        <i class="fab fa-youtube text-danger" aria-hidden="true"></i>
+      </a>
+      <a href="https://ohyicong.medium.com/">
+        <i class="fab fa-medium text-dark" aria-hidden="true"></i>
+      </a>
     </div>
   </div>
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-4">
-          <label for="pieces">Pieces</label>
-          <input type="text" id="pieces" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-4">
-          <label for="weight">Weight</label>
-          <div class="input-group">
-            <input type="text" id="weight" class="form-control" placeholder="">
-            <span class="input-group-text">kg</span>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <label for="volume">Volume</label>
-          <div class="input-group">
-            <input type="text" id="volume" class="form-control" placeholder="">
-            <span class="input-group-text">m3</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-5">
-          <label for="chargeableWeight">Chargeable Weight</label>
-          <div class="input-group">
-            <input type="text" id="chargeableWeight" class="form-control" placeholder="">
-            <span class="input-group-text">kg</span>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <label for="priceClass">Price Class</label>
-          <input type="text" id="priceClass" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-3">
-          <label for="currency">Currency</label>
-          <input type="text" id="currency" class="form-control" placeholder="">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-6">
-          <label for="product">Product</label>
-          <input type="text" id="product" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-6">
-          <label for="priority">Priority</label>
-          <input type="text" id="priority" class="form-control" placeholder="" disabled>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="natureOfGoods">Nature of Goods</label>
-        <input type="text" [(ngModel)]="userInput" (keydown)="onKeyDown($event)" (keyup)="filterSuggestions()">
-        <ul *ngIf="userInput != '' ">
-          <p *ngFor="let suggestion of filteredSuggestions; let i = index"
-          [ngClass]="{'highlighted': i === highlightedIndex}" 
-          (click)="onSuggestionSelected(suggestion)" (mouseenter)="onSuggestionHover(i)">
-          {{ suggestion }}
-        </p>
-        </ul>
-    <div class="col-md-4">
-      <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
-      <input type="text" id="specialHandlingcodes" class="form-control" placeholder="">
-    </div>
-
-    <div class="col-md-4">
-      <label for="hsCode">Harmonized System (HS) Codes</label>
-      <input type="text" id="hsCode" class="form-control" placeholder="">
-    </div>
-
-  </div>
-</div>
-
-
-<!-- DATALISTS 
-<datalist id="listForNatureOfGoods">
-  <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
-</datalist>
--->
-
-
-
-
-
-
