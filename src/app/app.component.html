@@ -3,7 +3,6 @@
   Shipment Information
 </h3>
 
-<form>
   <div class="container ">
     <div class="row mb-2">
       <div class="col-md-4">
@@ -127,7 +126,6 @@
           <label for="natureOfGoods">Nature of Goods</label>
           <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
             (input)="onSearch()">
-
           <div *ngIf="filteredOptions.length > 0" class="dropdown">
             <ul>
               <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
@@ -153,4 +151,9 @@
       </button>
     </div>
   </div>
-</form>
+
+
+
+<datalist id="listForNatureOfGoods">
+  <option *ngFor="let NatureOfGood of listForNatureOfGoods" [value]="NatureOfGood">{{NatureOfGood}}</option>
+</datalist>
