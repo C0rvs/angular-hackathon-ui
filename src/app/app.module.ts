@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field'; // <-- import this module
 import { AppComponent } from './app.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +18,8 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatFormFieldModule // <-- add this module to the imports array
+    MatFormFieldModule,
+    HttpClientModule // <-- add this module to the imports array
   ],
   providers: [],
   bootstrap: [AppComponent]

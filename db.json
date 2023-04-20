@@ -1,0 +1,106 @@
+{
+    "hscodes":[
+        {
+            "primary": "true",
+            "hs_code": "10000000",
+            "nature_of_goods": "Live Plant and Animal Material and Accessories and Supplies"
+          },{
+            "primary": "true",
+            "hs_code": "10100000",
+            "nature_of_goods": "Live animals",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101500",
+            "nature_of_goods": "Livestock",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101501",
+            "nature_of_goods": "Cats",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101502",
+            "nature_of_goods": "Dogs",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101506",
+            "nature_of_goods": "Horses",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101507",
+            "nature_of_goods": "Sheep",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101508",
+            "nature_of_goods": "Goats",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101509",
+            "nature_of_goods": "Asses",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101511",
+            "nature_of_goods": "Swine",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101512",
+            "nature_of_goods": "Rabbits",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101513",
+            "nature_of_goods": "Guinea pigs",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101516",
+            "nature_of_goods": "Cattle",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101600",
+            "nature_of_goods": "Birds and fowl",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101601",
+            "nature_of_goods": "Live chickens",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101602",
+            "nature_of_goods": "Live ducks",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101603",
+            "nature_of_goods": "Live turkeys",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101604",
+            "nature_of_goods": "Live geese",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101605",
+            "nature_of_goods": "Live pheasants",
+            "shc": "AVI"
+          },{
+            "primary": "true",
+            "hs_code": "10101700",
+            "nature_of_goods": "Live fish",
+            "shc": "AVI"
+          }
+    ]
+        
+    
+}
