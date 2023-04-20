@@ -69,7 +69,7 @@
       <div class="row">
         <div class="col-md-4">
           <label for="pieces">Pieces</label>
-          <input type="text" id="pieces" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
+          <input type="text" id="pieces" class="form-control" placeholder="" (keyup)="progressValue($event)">
         </div>
         <div class="col-md-4">
           <label for="weight">Weight</label>
@@ -81,7 +81,7 @@
         <div class="col-md-4">
           <label for="volume">Volume</label>
           <div class="input-group">
-            <input type="text" id="volume" class="form-control" placeholder="" (keyup)="progressValue($event)">
+            <input type="text" id="volume" class="form-control" placeholder="" (keyup)="progressValue($event)" required>
             <span class="input-group-text">m3</span>
           </div>
         </div>
@@ -105,7 +105,8 @@
         </div>
         <div class="col-md-3">
           <label for="currency">Currency</label>
-          <input type="text" id="currency" class="form-control" placeholder="" (keyup)="progressValue($event)" list="currencyList">
+          <input type="text" id="currency" class="form-control" placeholder="" (keyup)="progressValue($event)"
+            list="currencyList">
         </div>
       </div>
     </div>
@@ -128,8 +129,8 @@
       <div class="input-group">
         <div class="form-label-group col-md-8">
           <label for="natureOfGoods">Nature of Goods</label>
-          <input type="text" id="natureOfGoods" class="form-control" placeholder="" [(ngModel)]="searchTerm"
-            (input)="onSearch()" (keyup)="progressValue($event)" required>
+          <input type="text" id="natureOfGoods" class="form-control" placeholder="" #natureOfGoods
+            [(ngModel)]="searchTerm" (input)="onSearch()" (keyup)="progressValue($event)" required>
           <div class="dropdown" *ngIf="filteredOptions.length > 0">
             <ul class="dropdown-list">
               <p *ngFor="let option of filteredOptions" (click)="onOptionSelected(option)">{{ option }}</p>
@@ -140,13 +141,14 @@
         <div class="form-label-group col-md-4">
           <label for="hsCode">HS Codes</label>
           <input type="text" id="hsCode" class="form-control" placeholder="" (keyup)="progressValue($event)"
-            minlength="6" maxlength="10" required>
+            [(ngModel)]="hsCode" minlength="6" maxlength="10" required>
         </div>
       </div>
     </div>
     <div class="col-md-4">
       <label for="specialHandlingcodes">Special Handling Codes (SHC)</label>
-      <input type="text" id="specialHandlingcodes" class="form-control" placeholder="" (keyup)="progressValue($event)">
+      <input type="text" id="specialHandlingcodes" class="form-control" placeholder="" (keyup)="progressValue($event)"
+        [(ngModel)]="specialHandlingcodes">
     </div>
 
   </div>
@@ -188,19 +190,19 @@
 <div class="container ">
   <div class="row mb-2">
     <div class="col-md-5">
-      <h2>
-        <strong>Estimated Booking Completion time : 15.24 s</strong>
-      </h2>
+      <h3>
+        <p>Estimated Booking Completion time : 15.24 s</p>
+      </h3>
     </div>
     <div class="col-md-2">
       <h3>
-        
+
       </h3>
     </div>
     <div class="col-md-5">
-      <h2>
-        <strong>Estimated Booking Confirmation time : 3.15 days</strong>
-      </h2>
+      <h3>
+        <p>Estimated Booking Confirmation time : 3.15 days</p>
+      </h3>
     </div>
   </div>
 </div>
