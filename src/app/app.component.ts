@@ -61,8 +61,8 @@ export class AppComponent implements OnInit {
   }
 
   progressValue(event: any) {
-    const arrayList = ["prefix", "serial", "issueCarrier", "agent", "origin", "destination", "weight", "natureOfGoods", "hsCode"];
-    const nonMandList = ["area", "pieces", "volume", "chargeableWeight", "priceClass", "currency", "product", "specialHandlingcodes"];
+    const arrayList = ["prefix", "serial", "issueCarrier", "agent", "origin", "destination", "weight", "volume", "natureOfGoods", "hsCode"];
+    const nonMandList = ["area", "pieces", "chargeableWeight", "priceClass", "currency", "product", "specialHandlingcodes"];
     const arrManLength = arrayList.length;
     const arrNonManLength = nonMandList.length;
     const inputValue = event.target.value;
@@ -119,8 +119,8 @@ export class AppComponent implements OnInit {
   }
   
   changeUponUpdateProgressValue(idName: string) {
-      const arrayList = ["prefix", "serial", "issueCarrier", "agent", "origin", "destination", "weight", "natureOfGoods", "hsCode"];
-      const nonMandList = ["area", "pieces", "volume", "chargeableWeight", "priceClass", "currency", "product", "specialHandlingcodes"];
+      const arrayList = ["prefix", "serial", "issueCarrier", "agent", "origin", "destination", "weight", "volume", "natureOfGoods", "hsCode"];
+      const nonMandList = ["area", "pieces", "chargeableWeight", "priceClass", "currency", "product", "specialHandlingcodes"];
       const arrManLength = arrayList.length;
       const arrNonManLength = nonMandList.length;
       const selectedId = idName;
