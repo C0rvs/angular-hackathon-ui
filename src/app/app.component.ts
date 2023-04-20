@@ -108,13 +108,43 @@ export class AppComponent implements OnInit {
     this.ezBoookDB.filter(natureOfGood => {
       if (userInput == natureOfGood.nature_of_goods) {
         this.hsCode = natureOfGood.hs_code;
+        this.changeUponUpdateProgressValue("hsCode");
         if (natureOfGood.shc != null) {
           this.specialHandlingcodes = natureOfGood.shc;
+          this.changeUponUpdateProgressValue("specialHandlingcodes");
         }
         console.log(this.hsCode);
       }
     })
   }
+  
+  changeUponUpdateProgressValue(idName: string) {
+      const arrayList = ["prefix", "serial", "issueCarrier", "agent", "origin", "destination", "weight", "natureOfGoods", "hsCode"];
+      const nonMandList = ["area", "pieces", "volume", "chargeableWeight", "priceClass", "currency", "product", "specialHandlingcodes"];
+      const arrManLength = arrayList.length;
+      const arrNonManLength = nonMandList.length;
+      const selectedId = idName;
+      
+      if (arrayList.indexOf(selectedId) >= 0 && this.selectedMandatory.indexOf(selectedId) < 0) {
+        //console.log('In the mand list, trying adding into the selected');
+        this.selectedMandatory.push(selectedId);
+      } else if (nonMandList.indexOf(selectedId) >= 0 && this.selectedNonMand.indexOf(selectedId) < 0) {
+        //console.log('In the nonMand list, trying adding into the selected');
+        this.selectedNonMand.push(selectedId);
+      }
+      const mandatoryCount = this.selectedMandatory.length;
+      const nonMandCount = this.selectedNonMand.length;
+      const sumScore = (arrManLength * 3) + nonMandCount;
+      const selectScore = (mandatoryCount * 3) + nonMandCount;
+      this.bookingProgress = Math.round((selectScore / sumScore) * 100);
+      if (this.bookingProgress < 30) {
+        this.type = "warning";
+      } else if (this.bookingProgress < 75) {
+        this.type = "info";
+      } else if (this.bookingProgress >= 75) {
+        this.type = "success";
+      }
+    }
 }
 
 
